@@ -1,0 +1,38 @@
+version: "3"
+services:
+  database:
+    image: "mysql:latest"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - "./src/database/create_database.sql:/docker-entrypoint-initdb.d/dump.sql"
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_PASSWORD: example
+      MYSQL_USER: user
+      MYSQL_DATABASE: storagehouse
+    networks:
+      backend:
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      backend:
+  web:
+    image: aws_api_image:1.0
+    build: "./src/web"
+    #image: "abiosoft/caddy:php-no-stats"
+    networks:
+      backend:
+    ports:
+      - "80:2015"
+    #volumes:
+    #  - "./src/web/api:/srv/api"
+  
+networks:
+        backend:
+
+
+
