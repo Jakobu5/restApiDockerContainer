@@ -1,0 +1,22 @@
+0.0.0.0
+
+ext .php
+
+
+fastcgi / 127.0.0.1:9000 php
+
+header / {
+		Strict-Transport-Security "max-age=31536000;"
+		X-XSS-Protection "1; mode=block"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Content-Security-Policy ""
+		Referrer-Policy "strict-origin-when-cross-origin"
+        -Server
+        -X-Powered-By
+	}
+
+
+on startup php-fpm7
+
+log stdout
